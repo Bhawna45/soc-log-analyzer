@@ -65,4 +65,4 @@ soc-log-analyzer/
 
 ## Author
 
-Mandeep, cyber security student and SOC enthusiast.
+Bhawna - https://github.com/Bhawna45
