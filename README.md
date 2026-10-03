@@ -2,7 +2,7 @@
 
 A web-based tool that analyzes SSH authentication logs and detects brute force attacks and possible compromised logins, with a simple dashboard for SOC analysts.
 
-**Live demo:** coming soon
+**Live demo:** https://soc-log-analyzer-mg1o.onrender.com
 
 ## Features
 
