@@ -63,6 +63,29 @@ soc-log-analyzer/
 - Export alerts as CSV or PDF report
 - Time-based detection (failures within a short window)
 
+## Deploy on Render
+
+1. Push the project to a GitHub repository (include `requirements.txt`).
+2. Sign in to [render.com](https://render.com) with the same GitHub account.
+3. Click **New +**, then **Web Service**, and connect this repository.
+4. Use these settings:
+
+| Field | Value |
+|-------|-------|
+| Language | Python 3 |
+| Branch | main |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `gunicorn app:app` |
+| Instance Type | Free |
+
+5. Click **Deploy Web Service**. The first build takes 2 to 5 minutes.
+6. When the logs show `Your service is live`, open the URL shown under the service name.
+
+Notes:
+
+- Every `git push` to `main` triggers an automatic redeploy.
+- On the free plan the app sleeps after inactivity, so the first request can take 30 to 50 seconds.
+
 ## Author
 
 Bhawna - https://github.com/Bhawna45
