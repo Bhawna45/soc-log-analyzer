@@ -1,0 +1,13 @@
+Oct  3 10:15:01 server sshd[1201]: Failed password for root from 185.220.101.5 port 40122 ssh2
+Oct  3 10:15:03 server sshd[1201]: Failed password for root from 185.220.101.5 port 40125 ssh2
+Oct  3 10:15:05 server sshd[1201]: Failed password for admin from 185.220.101.5 port 40130 ssh2
+Oct  3 10:15:07 server sshd[1201]: Failed password for invalid user test from 185.220.101.5 port 40135 ssh2
+Oct  3 10:15:09 server sshd[1201]: Failed password for root from 185.220.101.5 port 40140 ssh2
+Oct  3 10:15:11 server sshd[1201]: Failed password for root from 185.220.101.5 port 40145 ssh2
+Oct  3 10:16:20 server sshd[1305]: Failed password for ubuntu from 45.155.205.233 port 51022 ssh2
+Oct  3 10:16:22 server sshd[1305]: Failed password for ubuntu from 45.155.205.233 port 51025 ssh2
+Oct  3 10:16:25 server sshd[1305]: Failed password for invalid user oracle from 45.155.205.233 port 51030 ssh2
+Oct  3 10:17:40 server sshd[1410]: Accepted password for mandeep from 192.168.1.10 port 52100 ssh2
+Oct  3 10:18:05 server sshd[1422]: Failed password for mandeep from 192.168.1.10 port 52110 ssh2
+Oct  3 10:20:11 server sshd[1500]: Failed password for root from 103.77.192.14 port 33010 ssh2
+Oct  3 10:20:13 server sshd[1500]: Accepted password for root from 103.77.192.14 port 33012 ssh2

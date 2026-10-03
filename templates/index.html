@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOC Log Analyzer</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: auto; }
+    h1 { color: #38bdf8; }
+    .card { background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    button { background: #38bdf8; color: #0f172a; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #7dd3fc; }
+    .stats { display: flex; gap: 15px; flex-wrap: wrap; }
+    .stat { background: #334155; padding: 15px; border-radius: 8px; flex: 1; min-width: 150px; text-align: center; }
+    .stat b { display: block; font-size: 28px; color: #38bdf8; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #334155; }
+    .CRITICAL { color: #f87171; font-weight: bold; }
+    .HIGH { color: #fb923c; font-weight: bold; }
+    .MEDIUM { color: #facc15; font-weight: bold; }
+    .error { color: #f87171; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SOC Log Analyzer</h1>
+    <p>Upload an SSH auth log and detect brute force attempts and compromised logins.</p>
+
+    <div class="card">
+      <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="logfile">
+        <button type="submit">Analyze</button>
+      </form>
+      <br>
+      <form method="POST">
+        <input type="hidden" name="use_sample" value="1">
+        <button type="submit">Use Sample Log</button>
+      </form>
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    </div>
+
+    {% if result %}
+    <div class="card stats">
+      <div class="stat"><b>{{ result.total_failed }}</b>Failed logins</div>
+      <div class="stat"><b>{{ result.total_success }}</b>Successful logins</div>
+      <div class="stat"><b>{{ result.unique_attackers }}</b>IPs with failures</div>
+      <div class="stat"><b>{{ result.alerts|length }}</b>Alerts</div>
+    </div>
+
+    <div class="card">
+      <h2>Alerts</h2>
+      {% if result.alerts %}
+      <table>
+        <tr><th>Severity</th><th>Type</th><th>IP</th><th>Detail</th></tr>
+        {% for a in result.alerts %}
+        <tr>
+          <td class="{{ a.severity }}">{{ a.severity }}</td>
+          <td>{{ a.type }}</td>
+          <td>{{ a.ip }}</td>
+          <td>{{ a.detail }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>No threats detected.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h2>Failed Logins by IP</h2>
+      <canvas id="ipChart" height="120"></canvas>
+    </div>
+
+    <script>
+      const labels = {{ result.top_ips | map(attribute=0) | list | tojson }};
+      const values = {{ result.top_ips | map(attribute=1) | list | tojson }};
+      new Chart(document.getElementById("ipChart"), {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{ label: "Failed attempts", data: values, backgroundColor: "#38bdf8" }]
+        },
+        options: { scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+      });
+    </script>
+    {% endif %}
+  </div>
+</body>
+</html>
